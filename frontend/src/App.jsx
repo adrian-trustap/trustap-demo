@@ -1,5 +1,5 @@
 import Listing from "./Listing";
-import "./styles.css";
+import "./style.css";
 
 export default function App() {
   return (

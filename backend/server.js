@@ -41,6 +41,7 @@ app.post("/create-transaction", async (req, res) => {
     );
 
     const data = await r.json();
+    console.log("Trustap response:", data);
     res.json(data); // send JSON back to frontend
   } catch (err) {
     console.error(err);

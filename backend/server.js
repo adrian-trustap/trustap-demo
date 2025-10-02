@@ -3,53 +3,51 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 dotenv.config();
-
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Trustap demo backend is running");
-});
+const BACKEND_PORT = process.env.PORT || 3000;
 
-// Create Trustap transaction (sandbox)
+app.get("/", (req, res) => res.send("Trustap demo backend is running"));
+
 app.post("/create-transaction", async (req, res) => {
-  try {
-    const { buyer_email, price, item_name } = req.body;
+  const { buyer_email, price, item_name } = req.body;
 
-    const r = await fetch("https://sandbox.trustap.com/api/v2/transactions/lite", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.TRUSTAP_API_KEY}`,
-      },
-      body: JSON.stringify({
-        buyer_email: buyer_email,        // your test buyer email
-        amount: price,                   // amount in cents or euros (check doc)
-        currency: "EUR",
-        description: item_name,
-        // ...add other fields from the docs as needed
-        redirect_url: "https://your-frontend-url/trustap-return" // where to send buyer
-      }),
-    });
+  try {
+    // Map your frontend fields to Trustap API fields
+    const payload = {
+      seller_email: buyer_email, // or your demo seller email
+      seller_country_code: "ie",
+      currency: "eur",
+      description: item_name,
+      value: price,
+      ad_id: "demo-ad-001",
+    };
+
+    const r = await fetch(
+      "https://dev.stage.trustap.com/api/v1/p2p/listings/create_with_seller",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Use HTTP Basic auth: API_KEY + colon, base64 encoded
+          Authorization:
+            "Basic " +
+            Buffer.from(process.env.TRUSTAP_API_KEY + ":").toString("base64"),
+        },
+        body: JSON.stringify(payload),
+      }
+    );
 
     const data = await r.json();
-
-    if (!r.ok) {
-      return res.status(r.status).json({ error: data });
-    }
-
-    res.json(data); // send Trustap response back to frontend
+    res.json(data); // send JSON back to frontend
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// Webhook listener
-app.post("/webhook", (req, res) => {
-  console.log("Webhook received:", req.body);
-  res.status(200).send("ok");
+app.listen(BACKEND_PORT, () => {
+  console.log(`Trustap demo backend listening on port ${BACKEND_PORT}`);
 });
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Backend listening on port ${port}`));

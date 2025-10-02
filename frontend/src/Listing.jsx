@@ -19,7 +19,13 @@ export default function Listing() {
         setMessage(JSON.stringify(res.error));
       } else {
         // Trustap returns a URL for the buyer to continue checkout
-        setMessage(`Reservation created. Continue at: ${res.checkout_url || res.url}`);
+        const redirectUrl = res.pay_deposit_url;
+        if (redirectUrl) {
+          setMessage(`Reservation created. Continue at: ${redirectUrl}`);
+        } else {
+          setMessage("Reservation created, but no redirect URL returned.");
+        }
+
       }
     } catch (err) {
       setMessage(err.message);

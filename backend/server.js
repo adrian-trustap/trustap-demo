@@ -41,6 +41,13 @@ app.post("/create-transaction", async (req, res) => {
     );
 
     const data = await r.json();
+    const redirectUri = "https://adrian-trustap.github.io/trustap-demo/";
+    if (data.pay_deposit_url) {
+      data.pay_deposit_url = `${data.pay_deposit_url}&redirect_uri=${encodeURIComponent(
+        redirectUri
+      )}`;
+    }
+    
     console.log("Trustap response:", data);
     res.json(data); // send JSON back to frontend
   } catch (err) {

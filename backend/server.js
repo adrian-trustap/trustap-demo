@@ -72,7 +72,7 @@ app.post("/webhook", express.json(), (req, res) => {
   const { code, metadata } = req.body;
   console.log("Webhook received:", req.body);
 
-  if (code === "listing_disabled" && metadata?.ad_id) {
+  if (code === "p2p_tx.deposit_accepted" && metadata?.ad_id) {
     disabledListings.add(metadata.ad_id);
   }
 

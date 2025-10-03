@@ -75,24 +75,16 @@ app.listen(BACKEND_PORT, () => {
 let disabledListings = new Set();
 
 // Webhook endpoint
-/*app.post("/webhook", express.json(), (req, res) => {
+app.post("/webhook", (req, res) => {
+  console.log("Webhook received:", JSON.stringify(req.body, null, 2));
+
   const { code, metadata } = req.body;
-  console.log("Webhook received:", req.body);
 
-
-
-  if (code === "p2p_tx.deposit_accepted" && metadata?.ad_id) {
+  // handle either of the two possible webhook codes
+  if ((code === "listing_disabled" || code === "p2p_tx.deposit_accepted") && metadata?.ad_id) {
     disabledListings.add(metadata.ad_id);
   }
 
-  // always respond quickly so Trustap knows it’s received
-  res.sendStatus(200);
-});*/
-
-
-app.post("/webhook", express.raw({ type: '*/*' }), (req, res) => {
-  console.log("Webhook raw body:", req.body.toString());
-  console.log("Headers:", req.headers);
   res.sendStatus(200);
 });
 

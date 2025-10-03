@@ -4,7 +4,7 @@ import { createTransaction } from "./api";
 export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("adrian+golf_seller@trustap.com");
   const [disabled, setDisabled] = useState(false);
 
   // Extra fields for preview

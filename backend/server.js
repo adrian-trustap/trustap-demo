@@ -12,12 +12,12 @@ const BACKEND_PORT = process.env.PORT || 3000;
 app.get("/", (req, res) => res.send("Trustap demo backend is running"));
 
 app.post("/create-transaction", async (req, res) => {
-  const { buyer_email, price, item_name } = req.body;
+  const { seller_email, price, item_name } = req.body;
 
   try {
     // Map your frontend fields to Trustap API fields
     const payload = {
-      seller_email: buyer_email, // or your demo seller email
+      seller_email: seller_email, // or your demo seller email
       seller_country_code: "ie",
       currency: "eur",
       description: item_name,
@@ -61,4 +61,34 @@ res.json(data);
 
 app.listen(BACKEND_PORT, () => {
   console.log(`Trustap demo backend listening on port ${BACKEND_PORT}`);
+});
+
+
+// in-memory store for demo only
+let disabledListings = new Set();
+
+// Webhook endpoint
+app.post("/webhook", express.json(), (req, res) => {
+  const { code, metadata } = req.body;
+  console.log("Webhook received:", req.body);
+
+  if (code === "listing_disabled" && metadata?.ad_id) {
+    disabledListings.add(metadata.ad_id);
+  }
+
+  // always respond quickly so Trustap knows it’s received
+  res.sendStatus(200);
+});
+
+// an API for your frontend to check status
+app.get("/listings/:adId/status", (req, res) => {
+  const adId = req.params.adId;
+  res.json({ disabled: disabledListings.has(adId) });
+});
+
+// for demo: reset listing availability
+app.post("/listings/:adId/reset", (req, res) => {
+  const adId = req.params.adId;
+  disabledListings.delete(adId);
+  res.json({ disabled: false });
 });

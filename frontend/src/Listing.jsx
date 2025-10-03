@@ -6,6 +6,23 @@ export default function Listing() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
 
+  const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const res = await fetch(`${BACKEND_URL}/listings/588a98/status`);
+      const data = await res.json();
+      setDisabled(data.disabled);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleReset = async () => {
+    await fetch(`${BACKEND_URL}/listings/588a98/reset`, { method: "POST" });
+    setDisabled(false);
+  };
+
+
   const handleReserve = async () => {
     setLoading(true);
     try {
@@ -44,9 +61,11 @@ export default function Listing() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button onClick={handleReserve} disabled={loading}>
-        {loading ? "Reserving..." : "Reserve Now"}
+      <button onClick={handleReserve} disabled={loading || disabled}>
+      {disabled ? "Reserved" : loading ? "Reserving..." : "Reserve Now"}
       </button>
+
+      <button onClick={handleReset}>Reset Listing (Demo)</button>
       {message && <p>{message}</p>}
     </div>
   );

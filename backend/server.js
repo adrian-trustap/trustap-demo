@@ -45,9 +45,9 @@ const redirectUri = "https://adrian-trustap.github.io/trustap-demo/";
 
 // trustap returns "actions_url"
 if (data.actions_url) {
-  data.pay_deposit_url = `${data.actions_url}?redirect_uri=${encodeURIComponent(
+  data.pay_deposit_url = `${data.actions_url}?redirect_uri=${
     redirectUri
-  )}`;
+  }`;
 }
 
 console.log("Trustap response (modified):", data);

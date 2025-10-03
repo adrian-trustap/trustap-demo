@@ -8,11 +8,11 @@ export default function Listing() {
   const [disabled, setDisabled] = useState(false);
 
   // Extra fields for preview
-  const [itemName, setItemName] = useState("2020 Ford Fiesta");
+  const [itemName, setItemName] = useState("1991 VW Golf");
   const [price, setPrice] = useState(5000);
-  const [imageUrl, setImageUrl] = useState("");
-  const [year, setYear] = useState("2020");
-  const [mileage, setMileage] = useState("30,000");
+  const [imageUrl, setImageUrl] = useState("https://www.topgear.com/sites/default/files/news-listicle/image/2023/02/30576-GolfGTIMkII.jpg");
+  const [year, setYear] = useState("1991");
+  const [mileage, setMileage] = useState("80,000");
   const [location, setLocation] = useState("Dublin, IE");
 
   useEffect(() => {
@@ -116,46 +116,72 @@ export default function Listing() {
 
       {/* Form / Admin */}
       <div style={{ flex: 1 }}>
-        <h2>Update Listing / Admin</h2>
-        <label>
-          Car Name:
-          <input value={itemName} onChange={(e) => setItemName(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Price (€):
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Year:
-          <input value={year} onChange={(e) => setYear(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Mileage (km):
-          <input value={mileage} onChange={(e) => setMileage(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Location:
-          <input value={location} onChange={(e) => setLocation(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Image URL:
-          <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Seller email (Admin):
-          <input value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <br />
-        <button onClick={handleReset}>Reset Listing (Demo)</button>
+  <h2>Update Listing / Admin</h2>
 
-        {message && <p style={{ color: "green" }}>{message}</p>}
-      </div>
+  <div
+    style={{
+      border: "1px solid #ddd",
+      borderRadius: "8px",
+      padding: "1rem",
+      background: "#f9f9f9",
+      display: "flex",
+      flexDirection: "column",
+      gap: "0.75rem", // space between rows
+    }}
+  >
+    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span>Car Name:</span>
+      <input style={{ flex: 1, marginLeft: "1rem" }} value={itemName} onChange={(e) => setItemName(e.target.value)} />
+    </label>
+
+    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span>Price (€):</span>
+      <input style={{ flex: 1, marginLeft: "1rem" }} type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+    </label>
+
+    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span>Year:</span>
+      <input style={{ flex: 1, marginLeft: "1rem" }} value={year} onChange={(e) => setYear(e.target.value)} />
+    </label>
+
+    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span>Mileage (km):</span>
+      <input style={{ flex: 1, marginLeft: "1rem" }} value={mileage} onChange={(e) => setMileage(e.target.value)} />
+    </label>
+
+    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span>Location:</span>
+      <input style={{ flex: 1, marginLeft: "1rem" }} value={location} onChange={(e) => setLocation(e.target.value)} />
+    </label>
+
+    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span>Image URL:</span>
+      <input style={{ flex: 1, marginLeft: "1rem" }} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+    </label>
+
+    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span>Seller Email (Admin):</span>
+      <input style={{ flex: 1, marginLeft: "1rem" }} value={email} onChange={(e) => setEmail(e.target.value)} />
+    </label>
+
+    <button
+      style={{
+        marginTop: "1rem",
+        background: "#ff6b6b",
+        color: "#fff",
+        border: "none",
+        padding: "0.5rem",
+        borderRadius: "4px",
+        cursor: "pointer",
+      }}
+      onClick={handleReset}
+    >
+      Reset Listing (Demo)
+    </button>
+  </div>
+
+  {message && <p style={{ color: "green", marginTop: "1rem" }}>{message}</p>}
+</div>
     </div>
   );
 }

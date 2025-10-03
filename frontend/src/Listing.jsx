@@ -27,7 +27,7 @@ export default function Listing() {
     setLoading(true);
     try {
       const res = await createTransaction({
-        buyer_email: email,
+        seller_email: email,
         price: 5000, // 5000 EUR or cents depending on API
         item_name: "2020 Ford Fiesta"
       });

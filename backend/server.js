@@ -7,6 +7,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+
+app.use((req,res,next)=>{
+  console.log(`${req.method} ${req.url}`, req.headers['content-type']);
+  next();
+});
+
 const BACKEND_PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => res.send("Trustap demo backend is running"));
@@ -68,15 +75,24 @@ app.listen(BACKEND_PORT, () => {
 let disabledListings = new Set();
 
 // Webhook endpoint
-app.post("/webhook", express.json(), (req, res) => {
+/*app.post("/webhook", express.json(), (req, res) => {
   const { code, metadata } = req.body;
   console.log("Webhook received:", req.body);
+
+
 
   if (code === "p2p_tx.deposit_accepted" && metadata?.ad_id) {
     disabledListings.add(metadata.ad_id);
   }
 
   // always respond quickly so Trustap knows it’s received
+  res.sendStatus(200);
+});*/
+
+
+app.post("/webhook", express.raw({ type: '*/*' }), (req, res) => {
+  console.log("Webhook raw body:", req.body.toString());
+  console.log("Headers:", req.headers);
   res.sendStatus(200);
 });
 

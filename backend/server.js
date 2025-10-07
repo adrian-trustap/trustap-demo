@@ -79,25 +79,24 @@ app.post("/webhook", (req, res) => {
   console.log("Webhook received:", JSON.stringify(req.body, null, 2));
 
   const { code, metadata } = req.body;
+  const adId = metadata?.ad_id;
 
-  // handle either of the two possible webhook codes
-  if ((code === "listing_disabled" || code === "p2p_tx.deposit_accepted") && metadata?.ad_id) {
-    console.log("p2p_tx.deposit_accepted received");
-    disabledListings.add(metadata.ad_id);
+  if (!adId) {
+    console.log("No ad_id found in webhook");
+    return res.sendStatus(200);
+  }
+
+  // 🔒 Disable when payment is confirmed or listing_disabled event
+  if (code === "listing_disabled" || code === "p2p_tx.deposit_accepted") {
+    console.log("➡️ Listing disabled for:", adId);
+    disabledListings.add(adId);
+  }
+
+  // 🔓 Re-enable when refunded or cancelled
+  if (code === "p2p_tx.deposit_refunded" || code === "p2p_tx.cancelled") {
+    console.log("➡️ Listing re-enabled for:", adId);
+    disabledListings.delete(adId);
   }
 
   res.sendStatus(200);
-});
-
-// an API for your frontend to check status
-app.get("/listings/:adId/status", (req, res) => {
-  const adId = req.params.adId;
-  res.json({ disabled: disabledListings.has(adId) });
-});
-
-// for demo: reset listing availability
-app.post("/listings/:adId/reset", (req, res) => {
-  const adId = req.params.adId;
-  disabledListings.delete(adId);
-  res.json({ disabled: false });
 });

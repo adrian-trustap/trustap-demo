@@ -82,6 +82,7 @@ app.post("/webhook", (req, res) => {
 
   // handle either of the two possible webhook codes
   if ((code === "listing_disabled" || code === "p2p_tx.deposit_accepted") && metadata?.ad_id) {
+    console.log("p2p_tx.deposit_accepted received");
     disabledListings.add(metadata.ad_id);
   }
 

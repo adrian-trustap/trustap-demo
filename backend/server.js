@@ -79,9 +79,8 @@ app.post("/webhook", (req, res) => {
   console.log("Webhook received:", JSON.stringify(req.body, null, 2));
 
   const { code, metadata } = req.body;
-  const adId = metadata?.ad_id;
   const adId = metadata?.ad_id || "588a98";
-  
+
   // 🔒 Disable when payment is confirmed or listing_disabled event
   if (code === "listing_disabled" || code === "p2p_tx.deposit_accepted") {
     console.log("➡️ Listing disabled for:", adId);

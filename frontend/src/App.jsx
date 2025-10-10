@@ -1,4 +1,4 @@
-import {Header, Listing} from "./Listing";
+import Listing, { Header } from "./Listing.jsx";
 import "./style.css";
 
 export default function App() {

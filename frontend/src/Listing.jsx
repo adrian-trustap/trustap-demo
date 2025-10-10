@@ -41,7 +41,7 @@ export default function Listing() {
     try {
       const res = await createTransaction({
         seller_email: email,
-        price,
+        price: Number(price),
         item_name: itemName,
         ad_id: "588a98",
       });
@@ -174,7 +174,7 @@ export default function Listing() {
       <div
         style={{
           flex: 1,
-          maxWidth: "200px",
+          maxWidth: "300px",
           background: "#f9f9f9",
           border: "1px solid #eee",
           borderRadius: "12px",

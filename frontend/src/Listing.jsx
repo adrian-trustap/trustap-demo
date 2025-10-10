@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { createTransaction } from "./api";
 
+const BACKEND_URL = "https://trustap-demo.onrender.com";
+
 export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");

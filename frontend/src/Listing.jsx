@@ -1,7 +1,25 @@
 import { useState, useEffect } from "react";
 import { createTransaction } from "./api";
+import logo from "../images/logo.svg"; 
 
 const BACKEND_URL = "https://trustap-demo.onrender.com";
+
+export default function Header() {
+  return (
+    <header style={{
+      display: "flex",
+      alignItems: "center",
+      padding: "1rem 2rem",
+      background: "#007bff",
+      color: "#fff",
+      gap: "1rem"
+    }}>
+      <img src={logo} alt="AutoTrust Logo" style={{ height: "40px" }} />
+      <h1 style={{ margin: 0, fontSize: "1.5rem", fontWeight: "bold" }}>AutoTrust Marketplace</h1>
+    </header>
+  );
+}
+
 
 export default function Listing() {
   const [loading, setLoading] = useState(false);

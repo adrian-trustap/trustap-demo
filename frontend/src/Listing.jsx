@@ -108,15 +108,21 @@ useEffect(() => {
             style={{
               marginTop: "1rem",
               width: "100%",
-              background: "#28a745",
-              color: "#fff",
+              background: disabled ? "#ccc" : loading ? "#ffc107" : "#28a745",
+              color: disabled ? "#555" : "#fff",
               border: "none",
-              padding: "0.5rem",
+              padding: "0.75rem",
               borderRadius: "4px",
-              cursor: "pointer",
+              cursor: disabled ? "not-allowed" : "pointer",
+              fontWeight: "bold",
+              fontSize: "1rem",
+              transition: "all 0.3s ease",
+              boxShadow: disabled
+                ? "inset 0 0 5px rgba(0,0,0,0.2)"
+                : "0 3px 6px rgba(0,0,0,0.2)",
             }}
           >
-            {disabled ? "Reserved" : loading ? "Reserving..." : "Reserve Now"}
+            {disabled ? "🚫 RESERVED" : loading ? "⏳ Reserving..." : "Reserve Now"}
           </button>
         </div>
       </div>

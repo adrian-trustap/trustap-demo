@@ -82,13 +82,13 @@ app.post("/webhook", (req, res) => {
   const adId = metadata?.ad_id || "588a98";
 
   // 🔒 Disable when payment is confirmed or listing_disabled event
-  if (code === "listing_disabled" || code === "p2p_tx.deposit_accepted") {
+  if (code === "reservation_disabled" || code === "p2p_tx.claimed") {
     console.log("➡️ Listing disabled for:", adId);
     disabledListings.add(adId);
   }
 
   // 🔓 Re-enable when refunded or cancelled
-  if (code === "p2p_tx.deposit_refunded" || code === "p2p_tx.cancelled") {
+  if (code === "reservation_enabled" || code === "p2p_tx.cancelled") {
     console.log("➡️ Listing re-enabled for:", adId);
     disabledListings.delete(adId);
   }

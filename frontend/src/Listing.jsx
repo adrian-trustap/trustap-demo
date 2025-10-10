@@ -17,14 +17,19 @@ export default function Listing() {
   const [mileage, setMileage] = useState("80,000");
   const [location, setLocation] = useState("Dublin, IE");
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
+useEffect(() => {
+  const interval = setInterval(async () => {
+    try {
       const res = await fetch(`${BACKEND_URL}/listings/588a98/status`);
       const data = await res.json();
+      console.log("Listing status:", data); // 👈 add this
       setDisabled(data.disabled);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    } catch (err) {
+      console.error("Error checking status:", err);
+    }
+  }, 5000);
+  return () => clearInterval(interval);
+}, []);
 
   const handleReset = async () => {
     await fetch(`${BACKEND_URL}/listings/588a98/reset`, { method: "POST" });

@@ -5,26 +5,6 @@ import favicon from "../images/favicon.ico";
 
 const BACKEND_URL = "https://trustap-demo.onrender.com";
 
-
-export function App() {
-  useEffect(() => {
-    const link =
-      document.querySelector("link[rel*='icon']") || document.createElement("link");
-    link.type = "image/x-icon";
-    link.rel = "shortcut icon";
-    link.href = favicon;
-    document.getElementsByTagName("head")[0].appendChild(link);
-  }, []);
-
-  return (
-    <div>
-      {/* your app */}
-    </div>
-  );
-}
-
-
-
 export function Header() {
   return (
     <header style={{

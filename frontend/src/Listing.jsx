@@ -4,7 +4,7 @@ import logo from "../images/logo.svg";
 
 const BACKEND_URL = "https://trustap-demo.onrender.com";
 
-export default function Header() {
+export function Header() {
   return (
     <header style={{
       display: "flex",

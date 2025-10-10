@@ -1,5 +1,4 @@
-import Header from "./components/Header";
-import Listing from "./Listing";
+import {Header, Listing} from "./Listing";
 import "./style.css";
 
 export default function App() {

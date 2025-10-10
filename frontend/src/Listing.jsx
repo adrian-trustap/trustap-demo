@@ -63,138 +63,175 @@ useEffect(() => {
   };
 
   return (
-    <div style={{ display: "flex", gap: "2rem", padding: "1rem" }}>
-      {/* Listing card */}
-      <div
-        style={{
-          width: "350px",
-          border: "1px solid #ddd",
-          borderRadius: "8px",
-          overflow: "hidden",
-          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-          background: "#fff",
-        }}
-      >
-        {imageUrl ? (
-          <img src={imageUrl} alt="Car" style={{ width: "100%", height: "200px", objectFit: "cover" }} />
-        ) : (
+  <div
+    style={{
+      display: "flex",
+      gap: "2rem",
+      padding: "2rem",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      background: "#f5f6f8",
+      minHeight: "100vh",
+      fontFamily: "system-ui, sans-serif",
+    }}
+  >
+    {/* Listing card */}
+    <div
+      style={{
+        width: "420px",
+        borderRadius: "12px",
+        overflow: "hidden",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        background: "#fff",
+        transition: "transform 0.3s ease",
+      }}
+    >
+      <div style={{ position: "relative" }}>
+        <img
+          src={imageUrl}
+          alt="Car"
+          style={{
+            width: "100%",
+            height: "260px",
+            objectFit: "cover",
+            filter: disabled ? "grayscale(80%)" : "none",
+          }}
+        />
+        {disabled && (
           <div
             style={{
-              width: "100%",
-              height: "200px",
-              background: "#f0f0f0",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: "rgba(0, 0, 0, 0.6)",
+              color: "#fff",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#999",
+              fontSize: "1.75rem",
+              fontWeight: "bold",
+              textTransform: "uppercase",
             }}
           >
-            Car Image Preview
+            Reserved
           </div>
         )}
-        <div style={{ padding: "1rem" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h3 style={{ margin: 0 }}>{itemName}</h3>
-            <span style={{ background: "#007bff", color: "#fff", borderRadius: "4px", padding: "0.25rem 0.5rem" }}>
-              €{price}
-            </span>
-          </div>
-          <div style={{ fontSize: "0.9rem", color: "#666", marginTop: "0.5rem" }}>
-            {year} • {mileage} km • {location}
-          </div>
-          <button
-            onClick={handleReserve}
-            disabled={loading || disabled}
-            style={{
-              marginTop: "1rem",
-              width: "100%",
-              background: disabled ? "#ccc" : loading ? "#ffc107" : "#28a745",
-              color: disabled ? "#555" : "#fff",
-              border: "none",
-              padding: "0.75rem",
-              borderRadius: "4px",
-              cursor: disabled ? "not-allowed" : "pointer",
-              fontWeight: "bold",
-              fontSize: "1rem",
-              transition: "all 0.3s ease",
-              boxShadow: disabled
-                ? "inset 0 0 5px rgba(0,0,0,0.2)"
-                : "0 3px 6px rgba(0,0,0,0.2)",
-            }}
-          >
-            {disabled ? "🚫 RESERVED" : loading ? "⏳ Reserving..." : "Reserve Now"}
-          </button>
-        </div>
       </div>
 
-      {/* Form / Admin */}
-      <div style={{ flex: 1 }}>
-  <h2>Update Listing / Admin</h2>
+      <div style={{ padding: "1.25rem 1.5rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2 style={{ margin: 0, fontSize: "1.25rem" }}>{itemName}</h2>
+          <span
+            style={{
+              background: "#007bff",
+              color: "#fff",
+              borderRadius: "6px",
+              padding: "0.4rem 0.6rem",
+              fontWeight: "bold",
+            }}
+          >
+            €{price}
+          </span>
+        </div>
+        <div style={{ fontSize: "0.95rem", color: "#666", marginTop: "0.5rem" }}>
+          {year} • {mileage} km • {location}
+        </div>
 
-  <div
-    style={{
-      border: "1px solid #ddd",
-      borderRadius: "8px",
-      padding: "1rem",
-      background: "#f9f9f9",
-      display: "flex",
-      flexDirection: "column",
-      gap: "0.75rem", // space between rows
-    }}
-  >
-    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <span>Car Name:</span>
-      <input style={{ flex: 1, marginLeft: "1rem" }} value={itemName} onChange={(e) => setItemName(e.target.value)} />
-    </label>
-
-    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <span>Price (€):</span>
-      <input style={{ flex: 1, marginLeft: "1rem" }} type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-    </label>
-
-    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <span>Year:</span>
-      <input style={{ flex: 1, marginLeft: "1rem" }} value={year} onChange={(e) => setYear(e.target.value)} />
-    </label>
-
-    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <span>Mileage (km):</span>
-      <input style={{ flex: 1, marginLeft: "1rem" }} value={mileage} onChange={(e) => setMileage(e.target.value)} />
-    </label>
-
-    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <span>Location:</span>
-      <input style={{ flex: 1, marginLeft: "1rem" }} value={location} onChange={(e) => setLocation(e.target.value)} />
-    </label>
-
-    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <span>Image URL:</span>
-      <input style={{ flex: 1, marginLeft: "1rem" }} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-    </label>
-
-    <label style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <span>Seller Email (Admin):</span>
-      <input style={{ flex: 1, marginLeft: "1rem" }} value={email} onChange={(e) => setEmail(e.target.value)} />
-    </label>
-
-    <button
-      style={{
-        marginTop: "1rem",
-        background: "#ff6b6b",
-        color: "#fff",
-        border: "none",
-        padding: "0.5rem",
-        borderRadius: "4px",
-        cursor: "pointer",
-      }}
-      onClick={handleReset}
-    >
-      Reset Listing (Demo)
-    </button>
-  </div>
-
-  {message && <p style={{ color: "green", marginTop: "1rem" }}>{message}</p>}
-</div>
+        <button
+          onClick={handleReserve}
+          disabled={loading || disabled}
+          style={{
+            marginTop: "1.25rem",
+            width: "100%",
+            background: disabled ? "#b0b0b0" : loading ? "#ffc107" : "#28a745",
+            color: "#fff",
+            border: "none",
+            padding: "0.75rem 1rem",
+            borderRadius: "6px",
+            cursor: disabled ? "not-allowed" : "pointer",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            letterSpacing: "0.5px",
+            transition: "all 0.3s ease",
+            boxShadow: disabled
+              ? "inset 0 0 5px rgba(0,0,0,0.2)"
+              : "0 4px 8px rgba(0,0,0,0.15)",
+          }}
+        >
+          {disabled ? "🚫 RESERVED" : loading ? "⏳ Reserving..." : "Reserve Now"}
+        </button>
+      </div>
     </div>
-  );
+
+    {/* Admin Panel */}
+    <div
+      style={{
+        flex: "0 0 300px",
+        background: "#fff",
+        borderRadius: "10px",
+        border: "1px solid #eee",
+        padding: "1rem",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+      }}
+    >
+      <h3 style={{ marginTop: 0, fontSize: "1rem", color: "#444" }}>Update Listing / Admin</h3>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+          fontSize: "0.85rem",
+        }}
+      >
+        {[
+          ["Car Name", itemName, setItemName],
+          ["Price (€)", price, setPrice, "number"],
+          ["Year", year, setYear],
+          ["Mileage (km)", mileage, setMileage],
+          ["Location", location, setLocation],
+          ["Image URL", imageUrl, setImageUrl],
+          ["Seller Email", email, setEmail],
+        ].map(([label, value, setter, type = "text"], i) => (
+          <label key={i} style={{ display: "flex", flexDirection: "column" }}>
+            <span style={{ marginBottom: "0.25rem", color: "#555" }}>{label}</span>
+            <input
+              type={type}
+              value={value}
+              onChange={(e) => setter(e.target.value)}
+              style={{
+                padding: "0.4rem",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                fontSize: "0.85rem",
+              }}
+            />
+          </label>
+        ))}
+
+        <button
+          style={{
+            marginTop: "1rem",
+            background: "#ff6b6b",
+            color: "#fff",
+            border: "none",
+            padding: "0.5rem",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontWeight: "bold",
+            fontSize: "0.9rem",
+          }}
+          onClick={handleReset}
+        >
+          Reset Listing
+        </button>
+      </div>
+
+      {message && <p style={{ color: "green", marginTop: "1rem" }}>{message}</p>}
+    </div>
+  </div>
+);
+
 }

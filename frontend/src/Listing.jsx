@@ -174,6 +174,7 @@ export default function Listing() {
       <div
         style={{
           flex: 1,
+          maxWidth: "200px",
           background: "#f9f9f9",
           border: "1px solid #eee",
           borderRadius: "12px",

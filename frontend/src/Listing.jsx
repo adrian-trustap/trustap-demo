@@ -62,6 +62,7 @@ export default function Listing() {
         price,
         item_name: itemName,
         ad_id: "588a98",
+        image_url: imageUrl
       });
 
       if (res.error) {

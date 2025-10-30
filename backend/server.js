@@ -18,7 +18,7 @@ app.get("/", (req, res) => res.send("Trustap demo backend is running"));
 
 // create transaction
 app.post("/create-transaction", async (req, res) => {
-  const { seller_email, price, item_name } = req.body;
+  const { seller_email, price, item_name, image_url } = req.body;
   try {
     const payload = {
       seller_email,
@@ -27,6 +27,7 @@ app.post("/create-transaction", async (req, res) => {
       description: item_name,
       value: price,
       ad_id: "demo-ad-001",
+      image_url
     };
 
     const r = await fetch(

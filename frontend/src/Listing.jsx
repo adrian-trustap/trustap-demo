@@ -36,7 +36,7 @@ export default function Listing() {
   const [location, setLocation] = useState("Dublin, IE");
 
   // Calculate 5% deposit
-  const depositAmount = (price * 0.05).toFixed(2);
+  const depositAmount = (price * 0.00105).toFixed(2);
 
   useEffect(() => {
     const interval = setInterval(async () => {

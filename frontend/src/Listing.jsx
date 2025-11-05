@@ -21,7 +21,6 @@ export function Header() {
   );
 }
 
-
 export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -35,6 +34,9 @@ export default function Listing() {
   const [year, setYear] = useState("1991");
   const [mileage, setMileage] = useState("80,000");
   const [location, setLocation] = useState("Dublin, IE");
+
+  // Calculate 5% deposit
+  const depositAmount = (price * 0.05).toFixed(2);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -148,7 +150,11 @@ export default function Listing() {
                 : "0 4px 8px rgba(0,0,0,0.2)",
             }}
           >
-            {disabled ? "🚫 RESERVED" : loading ? "⏳ Reserving..." : "Reserve Now"}
+            {disabled
+              ? "🚫 RESERVED"
+              : loading
+              ? "⏳ Reserving..."
+              : `Reserve now for €${depositAmount}`}
           </button>
         </div>
       </div>
